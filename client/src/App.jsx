@@ -299,9 +299,9 @@ function HeroRedesign() {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/40 to-white"></div>
       </div>
 
-      {/* BACKGROUND MARQUEE IDENTIFIER - FULL WIDTH */}
-      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-full flex items-center pointer-events-none select-none z-[1] overflow-hidden whitespace-nowrap">
-        <div className="flex animate-marquee-reverse opacity-[0.12]">
+      {/* BACKGROUND MARQUEE IDENTIFIER - FULL WIDTH - HIDDEN ON MOBILE TO PREVENT OVERLAP */}
+      <div className="hidden md:flex absolute top-1/2 left-0 -translate-y-1/2 w-full items-center pointer-events-none select-none z-[1] overflow-hidden whitespace-nowrap">
+        <div className="flex animate-marquee-reverse opacity-[0.12] solarcards">
           {["SOLAR POWER PRO", "SOLAR POWER PRO", "SOLAR POWER PRO", "SOLAR POWER PRO", "SOLAR POWER PRO", "SOLAR POWER PRO"].map((text, i) => (
             <span key={i} className="text-[20vw] md:text-[22vw] font-black text-spp-navy leading-none tracking-tighter uppercase px-32">
               {text}
@@ -326,22 +326,19 @@ function HeroRedesign() {
           </div>
         </div>
 
-        {/* MOBILE EXCLUSIVE INTERACTIVE MARQUEE - solarcards */}
-        <div className="md:hidden w-full overflow-hidden my-8 py-6 border-y border-spp-navy/5 solarcards">
-          <div className="flex animate-marquee whitespace-nowrap items-center">
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="flex items-center gap-8 px-8">
-                <span className="text-3xl font-black text-spp-navy/10 uppercase tracking-tighter italic whitespace-nowrap">
-                   Swastik Solar <span className="text-neon-lime/30">•</span> Pro Platform
+        {/* MOBILE FLOW MARQUEE - REPLICATING SOLARCARD STYLE */}
+        <div className="md:hidden w-full overflow-hidden whitespace-nowrap py-6 my-4 border-y border-spp-navy/5">
+           <div className="flex animate-marquee-reverse opacity-[0.15] solarcards">
+              {["SOLAR POWER PRO", "SOLAR POWER PRO", "SOLAR POWER PRO", "SOLAR POWER PRO"].map((text, i) => (
+                <span key={i} className="text-[15vw] font-black text-spp-navy leading-none tracking-tighter uppercase px-10">
+                  {text}
                 </span>
-                <Zap size={20} className="text-neon-lime opacity-20" />
-              </div>
-            ))}
-          </div>
+              ))}
+           </div>
         </div>
 
         {/* CORPORATE IDENTITY - MINIMALIST REDESIGN 3.0 */}
-        <div className="mt-20 md:mt-32 w-full max-w-6xl mx-auto pt-10 md:pt-16">
+        <div className="mt-16 md:mt-32 w-full max-w-6xl mx-auto pt-8 md:pt-16">
           <div className="grid md:grid-cols-12 gap-16">
             <div className="md:col-span-7 text-left space-y-10">
               <div className="space-y-4">
