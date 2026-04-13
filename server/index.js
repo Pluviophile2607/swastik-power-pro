@@ -7,7 +7,6 @@ const compression = require('compression');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const mongoSanitize = require('express-mongo-sanitize');
-const xss = require('xss-clean');
 const errorHandler = require('./middleware/errorMiddleware');
 
 // Import Routes
@@ -42,7 +41,6 @@ app.use(cors(corsOptions));
 // 2. SECURITY HARDENING
 app.use(helmet()); // Security Headers
 app.use(mongoSanitize()); // Prevent NoSQL Injection
-app.use(xss()); // Prevent XSS Attacks
 
 // Rate Limiting Protocol
 const limiter = rateLimit({
