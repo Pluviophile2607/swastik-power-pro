@@ -330,7 +330,7 @@ function HeroRedesign() {
         <div className="md:hidden w-screen relative left-1/2 -translate-x-1/2 overflow-hidden whitespace-nowrap py-6 my-8 border-y border-spp-navy/5">
            <div className="flex animate-marquee-reverse opacity-[0.2] solarcards whitespace-nowrap">
               {["SOLAR POWER PRO", "SOLAR POWER PRO", "SOLAR POWER PRO", "SOLAR POWER PRO", "SOLAR POWER PRO"].map((text, i) => (
-                <span key={i} className="text-[14vw] font-black text-spp-navy leading-none tracking-tighter uppercase px-8">
+                <span key={i} className="text-[14vw] font-black text-spp-navy leading-none uppercase px-8">
                   {text}
                 </span>
               ))}
