@@ -4,6 +4,8 @@
   --color-spp-green: #01A862;
   --color-spp-navy: #0F172A; /* Deep Space Navy */
   --color-neon-lime: #D4FF37;
+  --marquee-duration: 12s;
+  --marquee-duration-desktop: 80s;
   --color-solar-gold: #fbbf24;
   --color-solar-deep: #1e293b;
   --color-solar-slate: #64748b;
@@ -87,10 +89,19 @@ html {
   }
 
   .animate-marquee {
-    animation: marquee 25s linear infinite;
+    animation: marquee var(--marquee-duration) linear infinite;
   }
   .animate-marquee-reverse {
-    animation: marquee-reverse 25s linear infinite;
+    animation: marquee-reverse var(--marquee-duration) linear infinite;
+  }
+
+  @media (min-width: 768px) {
+    .animate-marquee {
+      animation-duration: var(--marquee-duration-desktop);
+    }
+    .animate-marquee-reverse {
+      animation-duration: var(--marquee-duration-desktop);
+    }
   }
 }
 
