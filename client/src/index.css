@@ -92,6 +92,10 @@ html {
   .animate-marquee-reverse {
     animation: marquee-reverse 60s linear infinite;
   }
+
+  .solarcards span {
+    @apply transition-all duration-700;
+  }
 }
 
 @keyframes fade-in {

@@ -319,27 +319,29 @@ function HeroRedesign() {
           <p className="text-lg md:text-xl text-spp-navy font-medium max-w-2xl mx-auto leading-relaxed">
             Swastik Power Pro is at the forefront of the renewable energy revolution, delivering high-performance infrastructure for a sustainable India.
           </p>
-          <div className="flex items-center justify-center gap-6 mb-12 md:mb-0">
+          <div className="flex items-center justify-center gap-6 mb-12">
             <Link to="/solutions" className="bg-neon-lime text-spp-navy px-10 py-5 rounded-full font-black text-sm uppercase tracking-widest flex items-center gap-3 hover:brightness-105 transition-all shadow-2xl shadow-neon-lime/30 group">
               Explore solutions <div className="w-6 h-6 bg-spp-navy rounded-full flex items-center justify-center text-neon-lime group-hover:translate-x-1 transition-transform"><ArrowRight size={14} /></div>
             </Link>
           </div>
         </div>
 
-        {/* MOBILE DEPLOYMENT MARQUEE - Active between CTA and Identity */}
-        <div className="md:hidden w-full overflow-hidden py-8 mb-10 relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-white via-transparent to-white z-10"></div>
-          <div className="flex whitespace-nowrap animate-marquee opacity-30">
+        {/* MOBILE EXCLUSIVE INTERACTIVE MARQUEE - solarcards */}
+        <div className="md:hidden w-full overflow-hidden my-8 py-6 border-y border-spp-navy/5 solarcards">
+          <div className="flex animate-marquee whitespace-nowrap items-center">
             {[...Array(6)].map((_, i) => (
-              <span key={i} className="text-[10px] font-black uppercase tracking-[0.5em] text-spp-navy px-12 italic">
-                SWASTIK POWER PRO • INDUSTRIAL EXCELLENCE • SUSTAINABLE INFRASTRUCTURE • NATIONAL DEVELOPMENT • 
-              </span>
+              <div key={i} className="flex items-center gap-8 px-8">
+                <span className="text-3xl font-black text-spp-navy/10 uppercase tracking-tighter italic whitespace-nowrap">
+                   Swastik Solar <span className="text-neon-lime/30">•</span> Pro Platform
+                </span>
+                <Zap size={20} className="text-neon-lime opacity-20" />
+              </div>
             ))}
           </div>
         </div>
 
         {/* CORPORATE IDENTITY - MINIMALIST REDESIGN 3.0 */}
-        <div className="mt-10 md:mt-32 w-full max-w-6xl mx-auto pt-16">
+        <div className="mt-20 md:mt-32 w-full max-w-6xl mx-auto pt-10 md:pt-16">
           <div className="grid md:grid-cols-12 gap-16">
             <div className="md:col-span-7 text-left space-y-10">
               <div className="space-y-4">
