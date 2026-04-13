@@ -65,11 +65,6 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('combined'));
 }
 
-// 4. CORE MIDDLEWARE
-app.use(compression());
-app.use(express.json({ limit: '10kb' })); // Body limit for security
-app.use('/uploads', express.static('uploads'));
-
 // 5. API ROUTE REGISTRATION
 app.use('/api/health', healthRoutes);
 app.use('/api/auth', authRoutes);
