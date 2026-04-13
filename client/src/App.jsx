@@ -326,11 +326,11 @@ function HeroRedesign() {
           </div>
         </div>
 
-        {/* MOBILE FLOW MARQUEE - REPLICATING SOLARCARD STYLE */}
-        <div className="md:hidden w-full overflow-hidden whitespace-nowrap py-6 my-4 border-y border-spp-navy/5">
-           <div className="flex animate-marquee-reverse opacity-[0.15] solarcards">
-              {["SOLAR POWER PRO", "SOLAR POWER PRO", "SOLAR POWER PRO", "SOLAR POWER PRO"].map((text, i) => (
-                <span key={i} className="text-[15vw] font-black text-spp-navy leading-none tracking-tighter uppercase px-10">
+        {/* MOBILE FLOW MARQUEE - FULL WIDTH BREAKOUT */}
+        <div className="md:hidden w-screen relative left-1/2 -translate-x-1/2 overflow-hidden whitespace-nowrap py-6 my-8 border-y border-spp-navy/5">
+           <div className="flex animate-marquee-reverse opacity-[0.2] solarcards whitespace-nowrap">
+              {["SOLAR POWER PRO", "SOLAR POWER PRO", "SOLAR POWER PRO", "SOLAR POWER PRO", "SOLAR POWER PRO"].map((text, i) => (
+                <span key={i} className="text-[14vw] font-black text-spp-navy leading-none tracking-tighter uppercase px-8">
                   {text}
                 </span>
               ))}
