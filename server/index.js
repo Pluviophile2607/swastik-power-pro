@@ -20,30 +20,7 @@ const healthRoutes = require('./routes/healthRoutes');
 
 const app = express();
 
-// 1. PERFORMANCE MONITORING (Logging)
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
-} else {
-  app.use(morgan('combined'));
-}
-
-// 2. SECURITY HARDENING
-app.use(helmet()); // Security Headers
-app.use(mongoSanitize()); // Prevent NoSQL Injection
-app.use(xss()); // Prevent XSS Attacks
-
-// Rate Limiting Protocol
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per windowMs
-  message: {
-    success: false,
-    message: 'Too many requests from this terminal, please try again after 15 minutes.'
-  }
-});
-app.use('/api/', limiter);
-
-// 3. CORS PROTOCOL
+// 1. CORS PROTOCOL (Priority #1 for Preflight handling)
 const whitelist = [
   'https://swastik-power-pro.vercel.app',
   'http://localhost:3000',
@@ -57,9 +34,36 @@ const corsOptions = {
       callback(new Error('Not authorized by SWASTIK_CORS_PROTOCOL'));
     }
   },
-  credentials: true
+  credentials: true,
+  optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));
+
+// 2. SECURITY HARDENING
+app.use(helmet()); // Security Headers
+app.use(mongoSanitize()); // Prevent NoSQL Injection
+app.use(xss()); // Prevent XSS Attacks
+
+// Rate Limiting Protocol
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, 
+  max: 100,
+  message: {
+    success: false,
+    message: 'Too many requests from this terminal, please try again after 15 minutes.'
+  }
+});
+app.use('/api/', limiter);
+
+// 3. CORE MIDDLEWARE
+app.use(compression());
+app.use(express.json({ limit: '10kb' })); 
+app.use('/uploads', express.static('uploads'));
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+} else {
+  app.use(morgan('combined'));
+}
 
 // 4. CORE MIDDLEWARE
 app.use(compression());
@@ -98,8 +102,8 @@ connectDB();
 
 // 7. PRODUCTION SERVER LIFECYCLE
 const PORT = process.env.PORT || 5000;
-const server = app.listen(PORT, '0.0.0.0', () => {
-  console.log(`[TERMINAL] Server Operational at http://0.0.0.0:${PORT} [${process.env.NODE_ENV}]`);
+const server = app.listen(PORT, () => {
+  console.log(`[TERMINAL] Server Operational at port ${PORT} [${process.env.NODE_ENV}]`);
 });
 
 // GRACEFUL SHUTDOWN
