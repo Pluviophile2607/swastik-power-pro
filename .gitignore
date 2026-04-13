@@ -1,0 +1,55 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Production / Build
+dist/
+build/
+out/
+.next/
+
+# Environment Variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+**/.env
+**/.env.*.local
+
+# Vite / Frontend Temporaries
+vite.config.js.timestamp-*
+*.mjs.map
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# Backups & Archives
+*.zip
+*.tar.gz
+*.rar
+server.zip
+
+# Stitch & Automation
+stitch_assets.json
+stitch_screen.html
+stitch_screen.json
+stitch_spec.json
+temp_stitch/
+project_status_summary.md
+
+# IDEs & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Project Specific
+server/uploads/
+client/landing_page_screenshot.png

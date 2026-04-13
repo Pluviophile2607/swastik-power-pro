@@ -1,0 +1,118 @@
+@import "tailwindcss";
+
+@theme {
+  --color-spp-green: #01A862;
+  --color-spp-navy: #0F172A; /* Deep Space Navy */
+  --color-neon-lime: #D4FF37;
+  --color-solar-gold: #fbbf24;
+  --color-solar-deep: #1e293b;
+  --color-solar-slate: #64748b;
+  --color-solar-emerald: #10b981;
+  --color-solar-soft: #f8fafc;
+  --color-solar-border: #e2e8f0;
+
+  /* Stitch Design System Tokens */
+  --color-stitch-primary: #00113a;
+  --color-stitch-on-surface: #191c1e;
+  --color-stitch-on-surface-variant: #444650;
+  --color-stitch-surface-low: #f2f4f7;
+  --color-stitch-surface-lowest: #ffffff;
+  --color-stitch-outline-variant: #c5c6d2;
+  --color-stitch-secondary: #1b6d24;
+  --color-stitch-secondary-container: #a0f399;
+  --color-stitch-on-secondary-container: #217128;
+  --color-stitch-error: #ba1a1a;
+  --color-stitch-error-container: #ffdad6;
+
+  --font-sans: "Inter", "system-ui", "sans-serif";
+  --font-accent: "Outfit", "sans-serif";
+  --font-headline: "Manrope", "sans-serif";
+
+  --shadow-premium: 0 50px 100px -20px rgba(15, 23, 42, 0.12), 0 30px 60px -30px rgba(0, 0, 0, 0.15);
+  --shadow-glass: 0 4px 30px rgba(0, 0, 0, 0.1);
+  --shadow-industrial: 0 10px 15px -3px rgba(15, 23, 42, 0.08);
+  --shadow-shimmer: 0 0 30px 5px rgba(1, 168, 98, 0.15);
+
+  --animate-in: fade-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-pulse-slow: pulse-slow 4s ease-in-out infinite;
+
+  /* Custom Industrial Gradients */
+  --mesh-gradient: radial-gradient(at 0% 0%, rgba(1, 168, 98, 0.15) 0%, transparent 50%),
+                   radial-gradient(at 100% 0%, rgba(15, 23, 42, 0.05) 0%, transparent 50%),
+                   radial-gradient(at 100% 100%, rgba(1, 168, 98, 0.1) 0%, transparent 50%),
+                   radial-gradient(at 0% 100%, rgba(15, 23, 42, 0.05) 0%, transparent 50%);
+
+  /* Marquee Animation */
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@layer base {
+  body {
+    @apply font-sans bg-slate-50 text-slate-900 antialiased selection:bg-spp-green/10 selection:text-spp-navy overflow-x-hidden;
+    background-image: var(--mesh-gradient);
+    background-attachment: fixed;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-8 py-4 bg-spp-navy text-white rounded-2xl font-black tracking-tight shadow-premium hover:bg-spp-green hover:text-white hover:-translate-y-1 active:scale-95 transition-all duration-500 disabled:opacity-50;
+  }
+  
+  .glass-sidebar {
+    @apply bg-white/80 backdrop-blur-3xl border-r border-white/20 shadow-2xl;
+  }
+
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-xl border border-white/40 shadow-premium;
+  }
+
+  .glass-effect {
+    @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-glass;
+  }
+
+  .industrial-indicator {
+    @apply w-2 h-2 rounded-full ring-4 ring-white shadow-sm;
+  }
+
+  .animate-marquee {
+    animation: marquee 30s linear infinite;
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-white;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-solar-border rounded-full hover:bg-spp-green/30 transition-colors;
+}
+
+/* Font Utilities */
+.font-manrope {
+  font-family: var(--font-headline);
+}
+
+.font-inter {
+  font-family: var(--font-sans);
+}
+
+/* Selection */
+::selection {
+  @apply bg-spp-green/20 text-spp-navy;
+}
