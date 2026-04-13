@@ -56,9 +56,9 @@ router.post('/verify-otp', async (req, res) => {
 router.post('/register', upload.fields([
   { name: 'gstCertificate', maxCount: 1 },
   { name: 'panCard', maxCount: 1 }
-]), async (req, res) => {
+]), async (req, res, next) => {
   try {
-    const { name, email, password, role, ...vendorData } = req.body;
+    const { name, email, password, role, ...flatData } = req.body;
     const userExists = await User.findOne({ email });
 
     if (userExists) {
@@ -68,37 +68,56 @@ router.post('/register', upload.fields([
     // Process files if they exist and upload to Cloudinary
     const documents = [];
     if (req.files) {
-      if (req.files.gstCertificate) {
-        const cloudUrl = await uploadToCloudinary(req.files.gstCertificate[0].buffer, 'swastik-vendors');
-        documents.push(cloudUrl);
-      }
-      if (req.files.panCard) {
-        const cloudUrl = await uploadToCloudinary(req.files.panCard[0].buffer, 'swastik-vendors');
-        documents.push(cloudUrl);
+      try {
+        if (req.files.gstCertificate) {
+          const cloudUrl = await uploadToCloudinary(req.files.gstCertificate[0].buffer, 'swastik-vendors');
+          documents.push(cloudUrl);
+        }
+        if (req.files.panCard) {
+          const cloudUrl = await uploadToCloudinary(req.files.panCard[0].buffer, 'swastik-vendors');
+          documents.push(cloudUrl);
+        }
+      } catch (uploadErr) {
+        console.error('[AUTH PROXY ERROR] Cloudinary Transmission Failure:', uploadErr);
+        return res.status(500).json({ success: false, message: 'Document synchronization failed.' });
       }
     }
+
+    // Manually reconstruct nested objects from flat body (bankDetails[key])
+    const bankDetails = {
+      accountName: req.body['bankDetails[accountName]'] || '',
+      accountNumber: req.body['bankDetails[accountNumber]'] || '',
+      ifscCode: req.body['bankDetails[ifscCode]'] || '',
+      bankName: req.body['bankDetails[bankName]'] || ''
+    };
+
+    const vendorProfile = {
+      companyName: req.body.companyName || '',
+      gstNumber: req.body.gstNumber || '',
+      registrationLicenseId: req.body.registrationLicenseId || '',
+      address: req.body.address || '',
+      bankDetails,
+      documents
+    };
 
     const user = await User.create({
       name,
       email,
       password,
       role: role || 'Vendor',
-      vendorProfile: {
-        ...vendorData,
-        documents
-      }
+      vendorProfile
     });
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '30d' });
 
     res.status(201).json({ success: true, token, user });
   } catch (err) {
-    res.status(400).json({ success: false, message: err.message });
+    next(err);
   }
 });
 
 // Login User
-router.post('/login', async (req, res) => {
+router.post('/login', async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
@@ -111,7 +130,7 @@ router.post('/login', async (req, res) => {
 
     res.status(200).json({ success: true, token, user });
   } catch (err) {
-    res.status(400).json({ success: false, message: err.message });
+    next(err);
   }
 });
 

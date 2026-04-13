@@ -59,11 +59,11 @@ const ContactPage = () => {
                     <div className="space-y-8">
                         <div className="space-y-1">
                             <p className="text-sm font-semibold text-slate-400">Email:</p>
-                            <a href="mailto:hello@swastikpower.pro" className="text-2xl font-bold text-spp-navy hover:text-neon-lime transition-colors">hello@swastikpower.pro</a>
+                            <a href="mailto:swastikpowerpro369@gmail.com" className="text-2xl font-bold text-spp-navy hover:text-neon-lime transition-colors">swastikpowerpro369@gmail.com</a>
                         </div>
                         <div className="space-y-1">
                             <p className="text-sm font-semibold text-slate-400">Phone:</p>
-                            <p className="text-2xl font-bold text-spp-navy">+91 800 567 78</p>
+                            <p className="text-2xl font-bold text-spp-navy">+91 70077 42635</p>
                             <p className="text-xs text-slate-400 font-medium">Available Monday to Friday, 9 AM - 6 PM IST</p>
                         </div>
                     </div>

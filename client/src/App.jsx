@@ -292,81 +292,84 @@ function HeroRedesign() {
     <section className="relative min-h-screen flex items-center overflow-hidden bg-white">
       <div className="absolute inset-0 z-0">
         <img 
-          src="/assets/hero.png" 
+          src="https://images.unsplash.com/photo-1680355065203-43ad84bb6e69?q=100&w=2560&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
           className="w-full h-full object-cover grayscale-[0.2] opacity-80 brightness-100" 
           alt="Solar mountain" 
         />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/40 to-white"></div>
       </div>
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 pt-32 pb-10 flex flex-col items-center text-center">
-        <div className="relative w-full">
-          <h1 className="text-[80px] md:text-[180px] lg:text-[240px] font-black text-spp-navy/5 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 leading-none tracking-tighter uppercase pointer-events-none select-none whitespace-nowrap">
-            SOLAR POWER PRO
-          </h1>
-          <div className="relative space-y-10">
-            <h2 className="text-5xl md:text-8xl font-black text-spp-navy leading-[1.05] tracking-tight">
-              Next-Generation <br />
-              Solar Energy <span className="italic">Solutions</span>
-            </h2>
-            <p className="text-lg md:text-xl text-spp-navy font-medium max-w-2xl mx-auto leading-relaxed">
-              Swastik Power Pro is at the forefront of the renewable energy revolution, delivering high-performance infrastructure for a sustainable India.
-            </p>
-            <div className="flex items-center justify-center gap-6">
-              <Link to="/solutions" className="bg-neon-lime text-spp-navy px-10 py-5 rounded-full font-black text-sm uppercase tracking-widest flex items-center gap-3 hover:brightness-105 transition-all shadow-2xl shadow-neon-lime/30 group">
-                Explore solutions <div className="w-6 h-6 bg-spp-navy rounded-full flex items-center justify-center text-neon-lime group-hover:translate-x-1 transition-transform"><ArrowRight size={14} /></div>
-              </Link>
-            </div>
+      {/* BACKGROUND MARQUEE IDENTIFIER - FULL WIDTH */}
+      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-full flex items-center pointer-events-none select-none z-[1] overflow-hidden whitespace-nowrap">
+        <div className="flex animate-marquee-reverse opacity-[0.12]">
+          {["SOLAR POWER PRO", "SOLAR POWER PRO", "SOLAR POWER PRO", "SOLAR POWER PRO", "SOLAR POWER PRO", "SOLAR POWER PRO"].map((text, i) => (
+            <span key={i} className="text-[20vw] md:text-[22vw] font-black text-spp-navy leading-none tracking-tighter uppercase px-32">
+              {text}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 pt-20 pb-10 flex flex-col items-center text-center">
+        <div className="relative space-y-5 z-10">
+          <h2 className="text-5xl md:text-8xl font-black text-spp-navy leading-[1.05] tracking-tight">
+            Next-Generation <br />
+            Solar Energy <span className="italic">Solutions</span>
+          </h2>
+          <p className="text-lg md:text-xl text-spp-navy font-medium max-w-2xl mx-auto leading-relaxed">
+            Swastik Power Pro is at the forefront of the renewable energy revolution, delivering high-performance infrastructure for a sustainable India.
+          </p>
+          <div className="flex items-center justify-center gap-6 mb-12">
+            <Link to="/solutions" className="bg-neon-lime text-spp-navy px-10 py-5 rounded-full font-black text-sm uppercase tracking-widest flex items-center gap-3 hover:brightness-105 transition-all shadow-2xl shadow-neon-lime/30 group">
+              Explore solutions <div className="w-6 h-6 bg-spp-navy rounded-full flex items-center justify-center text-neon-lime group-hover:translate-x-1 transition-transform"><ArrowRight size={14} /></div>
+            </Link>
           </div>
         </div>
 
         {/* CORPORATE IDENTITY - MINIMALIST REDESIGN 3.0 */}
         <div className="mt-32 w-full max-w-6xl mx-auto pt-16">
-           <div className="grid md:grid-cols-12 gap-16">
-              {/* Commitment Column */}
-              <div className="md:col-span-7 text-left space-y-10">
-                 <div className="space-y-4">
-                    <span className="text-[10px] font-black uppercase tracking-[0.4em] text-spp-navy/30">Commitment Statement</span>
-                    <h3 className="text-3xl md:text-4xl font-black text-spp-navy leading-tight tracking-tight">
-                       Engineering National Development With <span className="italic">Integrity & Innovation</span>
-                    </h3>
-                 </div>
-                 <p className="text-lg text-spp-navy/60 font-medium leading-relaxed border-l-[3px] border-neon-lime/30 pl-8">
-                    Swastik Power Pro Private Limited is committed to delivering <span className="text-spp-navy font-black">sustainable infrastructure solutions</span> that <span className="text-spp-navy font-black">improve quality of life</span> and promote <span className="text-spp-navy font-black">economic development in India</span>. Through a combination of technical expertise, quality workmanship, and innovative project management, the company successfully executes complex infrastructure projects across multiple sectors.
-                 </p>
+          <div className="grid md:grid-cols-12 gap-16">
+            <div className="md:col-span-7 text-left space-y-10">
+              <div className="space-y-4">
+                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-spp-navy/30">Commitment Statement</span>
+                <h3 className="text-3xl md:text-4xl font-black text-spp-navy leading-tight tracking-tight">
+                  Engineering National Development With <span className="italic">Integrity & Innovation</span>
+                </h3>
               </div>
+              <p className="text-lg text-spp-navy/60 font-medium leading-relaxed border-l-[3px] border-neon-lime/30 pl-8">
+                Swastik Power Pro Private Limited is committed to delivering <span className="text-spp-navy font-black">sustainable infrastructure solutions</span> that <span className="text-spp-navy font-black">improve quality of life</span> and promote <span className="text-spp-navy font-black">economic development in India</span>. Through a combination of technical expertise, quality workmanship, and innovative project management, the company successfully executes complex infrastructure projects across multiple sectors.
+              </p>
+            </div>
 
-              {/* Vision & Mission Column */}
-              <div className="md:col-span-5 text-left flex flex-col justify-between">
-                 <div className="space-y-12">
-                    <div className="space-y-4">
-                       <span className="text-[10px] font-black uppercase tracking-[0.4em] text-spp-navy/30">Our Vision</span>
-                       <p className="text-sm font-bold text-spp-navy/40 leading-relaxed italic">
-                          "To be a leading provider of <span className="text-spp-navy font-black not-italic underline underline-offset-4 decoration-neon-lime/30">sustainable water and energy solutions</span> that transform communities and promote <span className="text-spp-navy font-black not-italic">environmental stewardship</span>."
-                       </p>
-                    </div>
-                    <div className="space-y-4">
-                       <span className="text-[10px] font-black uppercase tracking-[0.4em] text-spp-navy/30">Our Mission</span>
-                       <p className="text-sm font-bold text-spp-navy/40 leading-relaxed italic">
-                          "To deliver high-quality infrastructure projects that provide <span className="text-spp-navy font-black not-italic">safe water supply</span>, <span className="text-spp-navy font-black not-italic">reliable energy</span>, and sustainable development to rural and urban communities across India."
-                       </p>
-                    </div>
-                 </div>
+            <div className="md:col-span-5 text-left flex flex-col justify-between">
+              <div className="space-y-12">
+                <div className="space-y-4">
+                  <span className="text-[10px] font-black uppercase tracking-[0.4em] text-spp-navy/30">Our Vision</span>
+                  <p className="text-sm font-bold text-spp-navy/40 leading-relaxed italic">
+                    "To be a leading provider of <span className="text-spp-navy font-black not-italic underline underline-offset-4 decoration-neon-lime/30">sustainable water and energy solutions</span> that transform communities and promote <span className="text-spp-navy font-black not-italic">environmental stewardship</span>."
+                  </p>
+                </div>
+                <div className="space-y-4">
+                  <span className="text-[10px] font-black uppercase tracking-[0.4em] text-spp-navy/30">Our Mission</span>
+                  <p className="text-sm font-bold text-spp-navy/40 leading-relaxed italic">
+                    "To deliver high-quality infrastructure projects that provide <span className="text-spp-navy font-black not-italic">safe water supply</span>, <span className="text-spp-navy font-black not-italic">reliable energy</span>, and sustainable development to rural and urban communities across India."
+                  </p>
+                </div>
               </div>
-           </div>
+            </div>
+          </div>
 
-           {/* Values Strip */}
-           <div className="mt-16 pt-12 flex flex-col md:flex-row items-center justify-between gap-8 group">
-              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-spp-navy/30">Core Values</span>
-              <div className="flex flex-wrap justify-center gap-12">
-                 {["Quality", "Integrity", "Safety", "Sustainability", "Community Development"].map((v, i) => (
-                    <div key={v} className="flex items-center gap-4">
-                       <span className="text-[9px] font-black text-spp-navy/60">0{i+1}</span>
-                       <span className="text-[11px] font-black uppercase tracking-[0.2em] text-spp-navy">{v}</span>
-                    </div>
-                 ))}
-              </div>
-           </div>
+          <div className="mt-16 pt-12 flex flex-col md:flex-row items-center justify-between gap-8 group">
+            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-spp-navy/30">Core Values</span>
+            <div className="flex flex-wrap justify-center gap-12">
+              {["Quality", "Integrity", "Safety", "Sustainability", "Community Development"].map((v, i) => (
+                <div key={v} className="flex items-center gap-4">
+                  <span className="text-[9px] font-black text-spp-navy/60">0{i+1}</span>
+                  <span className="text-[11px] font-black uppercase tracking-[0.2em] text-spp-navy">{v}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -414,13 +417,11 @@ function JeevanMissionHighlight() {
       
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         <div className="max-w-3xl space-y-12">
-          <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-neon-lime/10 border border-neon-lime/20 text-neon-lime">
-            <Droplets size={18} />
-            <span className="text-[11px] font-black uppercase tracking-[0.3em]">Flagship Program Execution</span>
-          </div>
+          {/* <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-neon-lime/10 border border-neon-lime/20 text-neon-lime">
+          </div> */}
           
           <h2 className="text-6xl md:text-9xl font-black text-white leading-[0.9] tracking-tighter uppercase italic">
-            Proud <br />
+           Jal <br />
             Jeevan <br />
             Mission
           </h2>
@@ -542,9 +543,9 @@ function ProjectsPage() {
   ];
 
   return (
-    <div className="bg-white min-h-screen pb-24 font-sans">
+    <div className="bg-white min-h-screen pb-24 font-sans selection:bg-neon-lime/30">
       {/* FULL WIDTH INTEGRATED HERO */}
-      <div className="relative w-full min-h-[500px] md:min-h-[750px] overflow-hidden mb-12 flex flex-col justify-end isolate group">
+      <div className="relative w-full min-h-[500px] md:min-h-[650px] lg:min-h-[750px] overflow-hidden mb-8 md:mb-12 flex flex-col justify-end isolate group">
          {/* Background Image - Now Full Width */}
          <img 
            src="/assets/projects_hero.png" 
@@ -552,25 +553,22 @@ function ProjectsPage() {
            className="absolute inset-0 w-full h-full object-cover z-[-2]"
          />
          {/* Sophisticated Overlays */}
-         <div className="absolute inset-0 bg-gradient-to-t from-spp-navy via-spp-navy/40 to-transparent z-[-1]"></div>
-         <div className="absolute inset-0 bg-spp-navy/10 backdrop-blur-[2px] z-[-1]"></div>
+         <div className="absolute inset-0 bg-gradient-to-t from-spp-navy via-spp-navy/60 to-transparent z-[-1]"></div>
+         <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-spp-navy to-transparent z-[-1] opacity-80"></div>
+         <div className="absolute inset-0 bg-spp-navy/10 backdrop-blur-[1px] z-[-1]"></div>
 
          {/* Content Aligned with Page Grid */}
-         <div className="max-w-7xl mx-auto w-full px-6 pb-40">
-            <div className="relative flex flex-col md:flex-row justify-between items-end gap-12">
-               <div className="space-y-8">
-                  <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-white/10 backdrop-blur-xl text-neon-lime border border-white/20 shadow-2xl">
-                     <Compass size={18} />
-                     <span className="text-[11px] font-black uppercase tracking-[0.3em]">Infrastructure Portfolio v2.0</span>
-                  </div>
-                  <h1 className="text-7xl md:text-[11rem] font-black text-white leading-[0.85] tracking-tighter uppercase italic drop-shadow-2xl">
-                     Industrial <br /> 
+         <div className="max-w-7xl mx-auto w-full px-6 pb-20 md:pb-32 lg:pb-40 relative z-10 pt-40 md:pt-0">
+            <div className="relative flex flex-col md:flex-row justify-between items-center md:items-end gap-10 md:gap-16">
+               <div className="space-y-6 md:space-y-8 text-center md:text-left">
+                  <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-[9rem] font-black text-white leading-[0.85] tracking-tighter uppercase italic drop-shadow-2xl">
+                     Industrial <br className="hidden md:block" /> 
                      <span className="text-neon-lime">Projects</span>
                   </h1>
                </div>
                
-               <div className="max-w-sm space-y-6">
-                  <p className="text-xl text-white/80 font-medium leading-relaxed italic border-r-4 border-neon-lime pr-8">
+               <div className="max-w-sm space-y-6 text-center md:text-right">
+                  <p className="text-base md:text-lg lg:text-xl text-white/80 font-medium leading-relaxed italic border-none md:border-r-4 border-neon-lime pr-0 md:pr-8">
                      A high-performance directory of our national engineering footprint and sustainable infrastructure deployments.
                   </p>
                </div>
@@ -663,24 +661,23 @@ function JalJeevanMission() {
       <div className="max-w-7xl mx-auto px-6">
         {/* HEADER */}
         <div className="mb-24 flex flex-col md:flex-row justify-between items-end gap-12">
-          <div className="space-y-8">
-             <Link to="/" className="inline-flex items-center gap-3 text-spp-navy/40 hover:text-spp-navy transition-colors font-bold text-[11px] uppercase tracking-widest px-4 py-2 border border-spp-navy/10 rounded-full">
-                <ArrowRight size={14} className="rotate-180" /> Back to Home
-             </Link>
-             <div className="space-y-4">
-                <p className="text-[11px] font-black uppercase tracking-[0.4em] text-neon-lime">National Infrastructure </p>
-                <h1 className="text-6xl md:text-9xl font-black text-spp-navy leading-[0.9] tracking-tighter uppercase italic">
-                   Jal Jeevan <br className="hidden md:block" /> Mission
-                </h1>
-             </div>
-          </div>
-          <p className="text-xl text-spp-navy/40 font-medium max-w-sm leading-relaxed text-right">
-             A technical roadmap of our flagship water infrastructure project execution and delivery cycle.
-          </p>
+           <div className="space-y-4 md:space-y-6 text-center md:text-left">
+              <Link to="/" className="inline-flex items-center gap-3 text-spp-navy/40 hover:text-spp-navy transition-colors font-bold text-[10px] md:text-[11px] uppercase tracking-widest px-4 py-2 border border-spp-navy/10 rounded-full">
+                 <ArrowRight size={14} className="rotate-180" /> Back to Terminal
+              </Link>
+              <div className="space-y-3 md:space-y-4">
+                 <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black text-spp-navy leading-[0.9] tracking-tighter uppercase italic">
+                    Jal Jeevan <br className="hidden md:block" /> Mission
+                 </h1>
+              </div>
+           </div>
+           <p className="text-base md:text-xl text-spp-navy/40 font-medium max-w-sm leading-relaxed text-center md:text-right uppercase tracking-tight">
+              A technical roadmap of our flagship water infrastructure project execution and delivery cycle.
+           </p>
         </div>
 
         {/* BENTO TIMELINE GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(400px,auto)]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[minmax(350px,auto)] md:auto-rows-[minmax(400px,auto)]">
           {phases.map((phase, index) => (
             <div 
               key={index} 
@@ -689,7 +686,7 @@ function JalJeevanMission() {
               {/* Image Background for specific cards */}
               {phase.image && (
                 <>
-                  <div className="absolute inset-0 z-0 overflow-hidden transform group-hover:scale-110 transition-transform duration-1000 ease-out">
+                  <div className="absolute inset-0 z-0 overflow-hidden transform transition-transform duration-1000 ease-out">
                     <img 
                       src={phase.image} 
                       className={`w-full h-full object-cover filter brightness-[0.7] grayscale-[0.3] group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-1000`} 
@@ -713,10 +710,6 @@ function JalJeevanMission() {
                     {phase.icon}
                   </div>
                   <div className="space-y-1">
-                    <div className="flex items-center gap-3">
-                      <span className="text-[10px] font-black uppercase tracking-[0.4em] text-neon-lime">{phase.id}</span>
-                      <div className="h-px w-8 bg-neon-lime/30"></div>
-                    </div>
                     <span className="text-[10px] font-bold uppercase tracking-widest opacity-40 block">{phase.timeline}</span>
                   </div>
                 </div>
@@ -793,7 +786,7 @@ function GreenEnergySolar() {
          <div className="absolute inset-0 z-0">
             <img 
                src="/assets/rajasthan_solar.png" 
-               className="w-full h-full object-cover scale-105" 
+               className="w-full h-full object-cover" 
                alt="Rajasthan Solar Project" 
             />
             {/* Coordinate Overlay */}
@@ -918,7 +911,7 @@ function GreenEnergySolar() {
 
                {/* Innovation Card (Image Background) */}
                <div className="md:col-span-1 md:row-span-1 p-8 md:p-10 rounded-[40px] md:rounded-[60px] relative overflow-hidden group shadow-2xl flex flex-col justify-end">
-                  <img src="/assets/solar_precision.png" className="absolute inset-0 w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-1000 transform group-hover:scale-110" alt="Innovation" />
+                  <img src="/assets/solar_precision.png" className="absolute inset-0 w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-1000 transform" alt="Innovation" />
                   <div className="absolute inset-0 bg-gradient-to-t from-spp-navy/90 via-spp-navy/40 to-transparent"></div>
                   <div className="relative z-10 space-y-3 translate-y-2 group-hover:translate-y-0 transition-transform duration-700">
                      <span className="text-[9px] font-black uppercase tracking-[0.4em] text-neon-lime">Core Innovation</span>
@@ -1166,11 +1159,11 @@ function StepCard({ num, time, title, desc, active }) {
 }
 
 const SERVICES_DATA = [
-  { slug: "jal-jeevan-mission", title: "Proud Jeevan Mission", desc: "Government welfare program execution bringing clean water to every household across India.", icon: <CheckCircle2 size={24} />, tag: "Welfare", link: "/jal-jeevan-mission" },
+  { slug: "jal-jeevan-mission", title: "Jal Jeevan Mission", desc: "Government welfare program execution bringing clean water to every household across India.", icon: <CheckCircle2 size={24} />, tag: "Welfare", link: "/jal-jeevan-mission" },
   { slug: "green-energy-solar", title: "Green Energy & Solar Energy", desc: "Advanced renewable energy solutions and grid-scale installations for a sustainable future.", icon: <Sun size={24} />, tag: "Core Energy", link: "/green-energy-solar" },
   { slug: "solar-installation", title: "Solar Installation", desc: "Specialized residential and industrial solar module setup, maintenance, and performance tuning.", icon: <Sun size={24} />, tag: "Installation" },
   { slug: "elevated-water-tanks", title: "Elevated Water Tanks", desc: "Precision-engineered water storage solutions for urban development and rural irrigation.", icon: <Droplets size={24} />, tag: "Infrastructure" },
-  { slug: "ppms-building", title: "PPMS Building", desc: "Premium Project Management and Structural building services for mission-critical industrial scales.", icon: <Zap size={24} />, tag: "Construction" },
+  { slug: "ppms-building", title: "FPMS Building", desc: "Premium Project Management and Structural building services for mission-critical industrial scales.", icon: <Zap size={24} />, tag: "Construction" },
   { slug: "water-distribution-line", title: "Water Distribution Line", desc: "Comprehensive supply network engineering and maintenance infrastructure for municipalities.", icon: <Wind size={24} />, tag: "Utility" },
   { slug: "it-ht-work", title: "IT & HT Work", desc: "High-voltage electrical infrastructure management and industrial-grade mission-critical power systems.", icon: <Zap size={24} />, tag: "Electrical" },
   { slug: "wind-power", title: "Wind Power", desc: "Industrial-grade wind energy deployment and high-performance turbine optimization.", icon: <Wind size={24} />, tag: "Sustainable" },
@@ -1595,7 +1588,7 @@ function FooterCTA({ formData, setFormData, handleSubmit, loading, status }) {
     <section id="contact" className="py-24 md:py-40 bg-spp-navy relative overflow-hidden scroll-mt-24">
       {/* Dynamic Background */}
       <div className="absolute inset-0 z-0">
-         <img src="/assets/hero.png" className="w-full h-full object-cover opacity-30 grayscale brightness-75 scale-110" alt="CTA backdrop" />
+         <img src="https://images.unsplash.com/photo-1680355065203-43ad84bb6e69?q=80&w=2560&auto=format&fit=crop" className="w-full h-full object-cover opacity-30 grayscale brightness-75" alt="CTA backdrop" />
          <div className="absolute inset-0 bg-gradient-to-br from-spp-navy via-spp-navy/80 to-transparent"></div>
       </div>
 
@@ -1627,7 +1620,7 @@ function FooterCTA({ formData, setFormData, handleSubmit, loading, status }) {
                     </div>
                     <div className="min-w-0">
                       <p className="text-[9px] text-white/30 font-black uppercase tracking-[0.2em] mb-1">Direct Line</p>
-                      <p className="text-base sm:text-xl font-black text-white tracking-tight break-all md:break-normal">+91 123 456 7890</p>
+                      <p className="text-base sm:text-xl font-black text-white tracking-tight break-all md:break-normal">+91 70077 42635</p>
                     </div>
                   </div>
 
@@ -1637,7 +1630,7 @@ function FooterCTA({ formData, setFormData, handleSubmit, loading, status }) {
                     </div>
                     <div className="min-w-0">
                       <p className="text-[9px] text-white/30 font-black uppercase tracking-[0.2em] mb-1">Mail Terminal</p>
-                      <p className="text-base sm:text-xl font-black text-white tracking-tight italic break-all">solutions@swastik.pro</p>
+                      <p className="text-base sm:text-xl font-black text-white tracking-tight italic break-all">swastikpowerpro369@gmail.com</p>
                     </div>
                   </div>
                 </div>
@@ -1781,11 +1774,6 @@ function FooterRedesign() {
               India's <br />
               Green Grid
             </h4>
-            <div className="flex gap-4">
-               <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-spp-navy hover:bg-neon-lime transition-all cursor-pointer"><Sun size={16} /></div>
-               <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-spp-navy hover:bg-neon-lime transition-all cursor-pointer"><Mail size={16} /></div>
-               <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-spp-navy hover:bg-neon-lime transition-all cursor-pointer"><Phone size={16} /></div>
-            </div>
           </div>
 
           <FooterCol title="Navigation" links={[
@@ -1797,7 +1785,7 @@ function FooterRedesign() {
           <FooterCol title="Core Services" links={[
             { label: "Solar Energy", href: "/green-energy-solar" },
             { label: "Water Tanks", href: "/water-tanks" },
-            { label: "Jeevan Mission", href: "/jal-jeevan-mission" },
+            { label: "Jal Jeevan Mission", href: "/jal-jeevan-mission" },
             { label: "Wind Power", href: "/wind-power" }
           ]} />
           <FooterCol title="Resources" links={[
@@ -1805,16 +1793,11 @@ function FooterRedesign() {
             { label: "Vendor Portal", href: "/login" },
             { label: "Registration", href: "/register" }
           ]} />
-          <FooterCol title="Legal Protocol" links={[
-            { label: "Privacy Policy", href: "/privacy" },
-            { label: "Terms of Service", href: "/privacy" }
-          ]} />
+
         </div>
         <div className="border-t border-solar-border pt-12 flex flex-col md:flex-row justify-between items-center gap-6">
            <p className="text-[11px] font-bold text-spp-navy/30 uppercase tracking-widest">©2026 Swastik Power Pro Private Limited. All rights reserved.</p>
            <div className="flex gap-8 text-[11px] font-bold text-spp-navy/30 uppercase tracking-widest">
-              <Link to="/privacy" className="hover:text-neon-lime transition-colors leading-none">Privacy Protection</Link>
-              <Link to="/privacy" className="hover:text-neon-lime transition-colors leading-none">Legal Terms</Link>
            </div>
         </div>
       </div>
@@ -1948,8 +1931,7 @@ function ServiceProjectLayout({ title, subtitle, phases, description }) {
                 <ArrowRight size={14} className="rotate-180" /> Back to Terminal
              </Link>
              <div className="space-y-3 md:space-y-4">
-                <p className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.4em] text-neon-lime">{subtitle}</p>
-                <h1 className="text-5xl sm:text-6xl md:text-9xl font-black text-spp-navy leading-[0.9] tracking-tighter uppercase italic">
+                <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black text-spp-navy leading-[0.9] tracking-tighter uppercase italic">
                    {title.split(' ')[0]} <br className="hidden md:block" /> {title.split(' ').slice(1).join(' ')}
                 </h1>
              </div>
@@ -1982,10 +1964,6 @@ function ServiceProjectLayout({ title, subtitle, phases, description }) {
                     {React.cloneElement(phase.icon, { size: window?.innerWidth < 768 ? 24 : 32 })}
                   </div>
                   <div className="space-y-1">
-                    <div className="flex items-center gap-3">
-                      <span className="text-[10px] font-black uppercase tracking-[0.4em] text-neon-lime">{phase.id}</span>
-                      <div className="h-px w-6 md:w-8 bg-neon-lime/30"></div>
-                    </div>
                     <span className="text-[10px] font-bold uppercase tracking-widest opacity-40 block">{phase.timeline}</span>
                   </div>
                 </div>

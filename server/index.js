@@ -4,6 +4,11 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
+const morgan = require('morgan');
+const rateLimit = require('express-rate-limit');
+const mongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
+const errorHandler = require('./middleware/errorMiddleware');
 
 // Import Routes
 const authRoutes = require('./routes/authRoutes');
@@ -11,17 +16,58 @@ const adminRoutes = require('./routes/adminRoutes');
 const projectRoutes = require('./routes/projectRoutes');
 const invoiceRoutes = require('./routes/invoiceRoutes');
 const notificationRoutes = require('./routes/notificationRoutes');
+const healthRoutes = require('./routes/healthRoutes');
 
 const app = express();
 
-// Security and Performance Middleware
-app.use(helmet());
+// 1. PERFORMANCE MONITORING (Logging)
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+} else {
+  app.use(morgan('combined'));
+}
+
+// 2. SECURITY HARDENING
+app.use(helmet()); // Security Headers
+app.use(mongoSanitize()); // Prevent NoSQL Injection
+app.use(xss()); // Prevent XSS Attacks
+
+// Rate Limiting Protocol
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per windowMs
+  message: {
+    success: false,
+    message: 'Too many requests from this terminal, please try again after 15 minutes.'
+  }
+});
+app.use('/api/', limiter);
+
+// 3. CORS PROTOCOL
+const whitelist = [
+  'https://swastik-power-pro.vercel.app',
+  'http://localhost:3000',
+  'http://localhost:5173'
+];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not authorized by SWASTIK_CORS_PROTOCOL'));
+    }
+  },
+  credentials: true
+};
+app.use(cors(corsOptions));
+
+// 4. CORE MIDDLEWARE
 app.use(compression());
-app.use(express.json());
-app.use(cors());
+app.use(express.json({ limit: '10kb' })); // Body limit for security
 app.use('/uploads', express.static('uploads'));
 
-// API Route Registration
+// 5. API ROUTE REGISTRATION
+app.use('/api/health', healthRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/projects', projectRoutes);
@@ -30,17 +76,44 @@ app.use('/api/notifications', notificationRoutes);
 app.use('/api/reports', require('./routes/reportRoutes'));
 app.use('/api/inquiries', require('./routes/inquiryRoutes'));
 
-// Health Check
+// Root Status
 app.get('/', (req, res) => {
   res.send('Swastik Solar Management Platform API is live...');
 });
 
-// Database Connection
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('MongoDB connected successfully'))
-  .catch(err => console.error('MongoDB connection error:', err));
+// 6. GLOBAL ERROR PROTOCOL
+app.use(errorHandler);
 
+// DATABASE CONNECTION
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log('[SYSTEM] MongoDB Connected and Synchronized.');
+  } catch (err) {
+    console.error('[SYSTEM] MongoDB Connection Error:', err);
+    process.exit(1);
+  }
+};
+connectDB();
+
+// 7. PRODUCTION SERVER LIFECYCLE
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server is running on http://0.0.0.0:${PORT} in ${process.env.NODE_ENV || 'production'} mode.`);
+const server = app.listen(PORT, '0.0.0.0', () => {
+  console.log(`[TERMINAL] Server Operational at http://0.0.0.0:${PORT} [${process.env.NODE_ENV}]`);
+});
+
+// GRACEFUL SHUTDOWN
+process.on('unhandledRejection', (err) => {
+  console.error('[CRITICAL] Unhandled Rejection:', err.message);
+  server.close(() => process.exit(1));
+});
+
+process.on('SIGTERM', () => {
+  console.log('[SYSTEM] SIGTERM signal received. Closing terminal...');
+  server.close(() => {
+    mongoose.connection.close(false, () => {
+      console.log('[SYSTEM] Database and Server detached.');
+      process.exit(0);
+    });
+  });
 });

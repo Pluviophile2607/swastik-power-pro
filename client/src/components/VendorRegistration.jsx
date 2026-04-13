@@ -105,17 +105,50 @@ function VendorRegistration() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Basic Password Validation
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
+    // STEP 1 VALIDATION
+    if (step === 1) {
+      const requiredFields = ['companyName', 'address', 'contactName', 'contactEmail', 'contactPhone', 'password', 'confirmPassword'];
+      for (const field of requiredFields) {
+        if (!formData[field]) {
+          alert(`Please complete the ${field.replace(/([A-Z])/g, ' $1').toLowerCase()} protocol.`);
+          return;
+        }
+      }
+      if (formData.password !== formData.confirmPassword) {
+        alert("Security protocol failure: Passwords do not match!");
+        return;
+      }
+      setStep(2);
       return;
     }
 
-    // Email verification check bypassed per request
-
-    if (step < 4) {
-      setStep(step + 1);
+    // STEP 2 VALIDATION
+    if (step === 2) {
+      if (!formData.registrationDate || !formData.businessType) {
+        alert("Compliance protocol failure: Registration date and business type are mandatory.");
+        return;
+      }
+      setStep(3);
       return;
+    }
+
+    // STEP 3 VALIDATION
+    if (step === 3) {
+      const { accountName, accountNumber, ifscCode, bankName } = formData.bankDetails;
+      if (!accountName || !accountNumber || !ifscCode || !bankName) {
+        alert("Banking protocol failure: All fiscal identity fields are required.");
+        return;
+      }
+      setStep(4);
+      return;
+    }
+
+    // STEP 4 VALIDATION (Final Submit)
+    if (step === 4) {
+      if (!files.gstCertificate || !files.panCard) {
+        alert("Document protocol failure: Both GST and PAN scans must be uploaded for verification.");
+        return;
+      }
     }
 
     const data = new FormData();
@@ -128,7 +161,7 @@ function VendorRegistration() {
     // Append vendor profile data
     data.append('companyName', formData.companyName);
     data.append('gstNumber', formData.gstNumber);
-    data.append('registrationDate', formData.registrationDate);
+    data.append('registrationLicenseId', formData.registrationDate);
     data.append('businessType', formData.businessType);
     data.append('address', formData.address);
     data.append('contactName', formData.contactName);
@@ -150,7 +183,9 @@ function VendorRegistration() {
       alert('Registration successful! Please wait for Admin approval.');
       window.location.href = '/login';
     } catch (err) {
-      alert(err.response?.data?.message || 'Registration failed');
+      console.error('[REGISTRATION ERROR]', err);
+      const errorMsg = err.response?.data?.message || err.message || 'Registration failure in protocol uplink.';
+      alert(errorMsg);
     }
   };
 
@@ -163,16 +198,10 @@ function VendorRegistration() {
 
   return (
     <div className="min-h-screen bg-[#f8fafd] flex flex-col items-center py-12 px-6 font-sans">
-      {/* Header Logo */}
-      <div className="flex items-center gap-3 mb-8">
-        <div className="w-10 h-10 bg-spp-navy rounded-xl flex items-center justify-center text-white">
-          <Zap size={24} fill="white" />
-        </div>
-        <span className="text-2xl font-black tracking-tight text-spp-navy">Swastik Power Pro</span>
-      </div>
+
 
       {/* Page Title */}
-      <div className="text-center mb-12">
+      <div className="text-center mb-12 mt-24">
         <h1 className="text-4xl font-extra-black text-spp-navy tracking-tight mb-3">Vendor Onboarding</h1>
         <p className="text-slate-500 font-medium">Join our ecosystem of Industrial renewable Infrastructure partners.</p>
       </div>
@@ -219,17 +248,20 @@ function VendorRegistration() {
                 <FormInput 
                   label="COMPANY NAME" name="companyName" placeholder="e.g. SolarTech Infrastructure Ltd" 
                   value={formData.companyName} onChange={handleChange} 
+                  required
                 />
                 
                 <FormInput 
                   label="REGISTERED OFFICE ADDRESS" name="address" placeholder="Street address, City, Postal Code" 
                   value={formData.address} onChange={handleChange} 
                   isTextArea
+                  required
                 />
 
                 <FormInput 
                   label="CONTACT PERSON" name="contactName" placeholder="Full name of representative" 
                   value={formData.contactName} onChange={handleChange} 
+                  required
                 />
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -237,11 +269,13 @@ function VendorRegistration() {
                     <FormInput 
                       label="EMAIL ADDRESS" name="contactEmail" type="email" placeholder="contact@company.com" 
                       value={formData.contactEmail} onChange={handleChange} 
+                      required
                     />
                   </div>
                   <FormInput 
                     label="PHONE NUMBER" name="contactPhone" type="tel" placeholder="+1 (555) 000-0000" 
                     value={formData.contactPhone} onChange={handleChange} 
+                    required
                   />
                 </div>
 
@@ -251,10 +285,12 @@ function VendorRegistration() {
                   <FormInput 
                     label="CREATE PASSWORD" name="password" type="password" placeholder="Min. 8 characters" 
                     value={formData.password} onChange={handleChange} 
+                    required
                   />
                   <FormInput 
                     label="CONFIRM PASSWORD" name="confirmPassword" type="password" placeholder="Re-enter password" 
                     value={formData.confirmPassword} onChange={handleChange} 
+                    required
                   />
                 </div>
               </div>
@@ -271,7 +307,7 @@ function VendorRegistration() {
                   <FormInput label="GST NUMBER" name="gstNumber" placeholder="22AAAAA0000A1Z5" value={formData.gstNumber} onChange={handleChange} />
                   
                   <div className="flex flex-col gap-2">
-                    <label className="text-[10px] font-black tracking-[0.15em] text-slate-400 uppercase ml-1">REGISTRATION DATE</label>
+                    <label className="text-[10px] font-black tracking-[0.15em] text-slate-400 uppercase ml-1">REGISTRATION DATE <span className="text-red-500">*</span></label>
                     <CustomDatePicker 
                       value={formData.registrationDate} 
                       onChange={setDateValue} 
@@ -279,7 +315,7 @@ function VendorRegistration() {
                   </div>
                   
                   <div className="flex flex-col gap-2">
-                    <label className="text-[10px] font-black tracking-[0.15em] text-slate-400 uppercase ml-1">BUSINESS TYPE</label>
+                    <label className="text-[10px] font-black tracking-[0.15em] text-slate-400 uppercase ml-1">BUSINESS TYPE <span className="text-red-500">*</span></label>
                     <select 
                       name="businessType"
                       className="w-full bg-slate-50 border border-slate-100 rounded-2xl px-6 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-spp-navy/10 font-bold text-spp-navy transition-all appearance-none cursor-pointer"
@@ -304,11 +340,11 @@ function VendorRegistration() {
                   <p className="text-slate-400 text-sm font-medium">Secure banking information for your technology partner account.</p>
                 </div>
                 <div className="space-y-6">
-                  <FormInput label="ACCOUNT HOLDER NAME" name="bankDetails.accountName" placeholder="Organization Account Name" value={formData.bankDetails.accountName} onChange={handleChange} />
-                  <FormInput label="ACCOUNT NUMBER" name="bankDetails.accountNumber" placeholder="Bank Account Number" value={formData.bankDetails.accountNumber} onChange={handleChange} />
+                  <FormInput label="ACCOUNT HOLDER NAME" name="bankDetails.accountName" placeholder="Organization Account Name" value={formData.bankDetails.accountName} onChange={handleChange} required />
+                  <FormInput label="ACCOUNT NUMBER" name="bankDetails.accountNumber" placeholder="Bank Account Number" value={formData.bankDetails.accountNumber} onChange={handleChange} required />
                   <div className="grid grid-cols-2 gap-6">
-                    <FormInput label="IFSC CODE" name="bankDetails.ifscCode" placeholder="HDFC000XXXX" value={formData.bankDetails.ifscCode} onChange={handleChange} />
-                    <FormInput label="BANK NAME" name="bankDetails.bankName" placeholder="Bank Name" value={formData.bankDetails.bankName} onChange={handleChange} />
+                    <FormInput label="IFSC CODE" name="bankDetails.ifscCode" placeholder="HDFC000XXXX" value={formData.bankDetails.ifscCode} onChange={handleChange} required />
+                    <FormInput label="BANK NAME" name="bankDetails.bankName" placeholder="Bank Name" value={formData.bankDetails.bankName} onChange={handleChange} required />
                   </div>
                 </div>
              </div>
@@ -349,7 +385,7 @@ function VendorRegistration() {
                     </div>
                     <div className="text-center group w-full px-2">
                       <p className={`text-[10px] font-black tracking-widest uppercase truncate max-w-full ${files.gstCertificate ? 'text-green-700' : 'text-spp-navy'}`}>
-                        {files.gstCertificate ? files.gstCertificate.name : 'GST Certificate'}
+                        {files.gstCertificate ? files.gstCertificate.name : 'GST Certificate *'}
                       </p>
                       <p className="text-[9px] text-slate-400 font-bold mt-1 uppercase tracking-tight">PNG, JPG, PDF (MAX 5MB)</p>
                     </div>
@@ -364,7 +400,7 @@ function VendorRegistration() {
                     </div>
                     <div className="text-center group w-full px-2">
                       <p className={`text-[10px] font-black tracking-widest uppercase truncate max-w-full ${files.panCard ? 'text-green-700' : 'text-spp-navy'}`}>
-                        {files.panCard ? files.panCard.name : 'Pan Card Copy'}
+                        {files.panCard ? files.panCard.name : 'Pan Card Copy *'}
                       </p>
                       <p className="text-[9px] text-slate-400 font-bold mt-1 uppercase tracking-tight">PNG, JPG, PDF (MAX 2MB)</p>
                     </div>
@@ -373,14 +409,23 @@ function VendorRegistration() {
              </div>
           )}
 
-          <div className="mt-12 flex flex-col gap-6">
+          <div className="mt-12 flex flex-col md:flex-row gap-4 items-center">
+            {step > 1 && (
+              <button 
+                type="button"
+                onClick={() => setStep(step - 1)}
+                className="w-full md:w-fit bg-slate-100 text-spp-navy px-10 py-5 rounded-2xl font-black tracking-tight text-sm hover:bg-slate-200 transition-all flex items-center justify-center gap-3 whitespace-nowrap"
+              >
+                <ChevronLeft size={18} /> Previous Protocol
+              </button>
+            )}
             <button 
               onClick={handleSubmit}
               className="w-full md:w-fit bg-spp-navy text-white px-10 py-5 rounded-2xl font-black tracking-tight text-sm shadow-xl shadow-spp-navy/10 hover:translate-y-[-2px] active:scale-[0.98] transition-all flex items-center justify-center gap-3 whitespace-nowrap"
             >
               {step === 4 ? 'Complete Registration' : step === 1 ? 'Next: Company Details' : step === 2 ? 'Next: Banking Details' : 'Next: Documents Upload'} <ArrowRight size={18} />
             </button>
-            <Link to="/login" className="text-slate-400 text-xs font-bold hover:text-spp-navy transition-colors">Already have an account? Login here</Link>
+            <Link to="/login" className="text-slate-400 text-xs font-bold hover:text-spp-navy transition-colors ml-auto">Already have an account? Login here</Link>
           </div>
         </div>
 
@@ -426,14 +471,16 @@ function VendorRegistration() {
   );
 }
 
-function FormInput({ label, name, isTextArea, type, ...props }) {
+function FormInput({ label, name, isTextArea, type, required, ...props }) {
   const [showPassword, setShowPassword] = useState(false);
   const isPassword = type === 'password';
   const inputType = isPassword ? (showPassword ? 'text' : 'password') : type;
 
   return (
     <div className="flex flex-col gap-2">
-      <label className="text-[10px] font-black tracking-[0.15em] text-slate-400 uppercase ml-1">{label}</label>
+      <label className="text-[10px] font-black tracking-[0.15em] text-slate-400 uppercase ml-1">
+        {label} {required && <span className="text-red-500">*</span>}
+      </label>
       <div className="relative group/field">
         {isTextArea ? (
           <textarea 

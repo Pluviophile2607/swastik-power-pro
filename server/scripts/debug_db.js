@@ -7,7 +7,7 @@ const debug = async () => {
     await mongoose.connect(process.env.MONGODB_URI);
     console.log('MongoDB Connected...');
 
-    const user = await User.findOne({ email: 'swastikpower@gmail.com' });
+    const user = await User.findOne({ email: 'swastikpowerpro369@gmail.com' });
     if (user) {
       console.log('Admin found: YES');
       const isMatch = await user.comparePassword('swastikpower@123.');

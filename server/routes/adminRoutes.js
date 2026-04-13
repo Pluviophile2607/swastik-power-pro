@@ -5,7 +5,7 @@ const Notification = require('../models/Notification');
 const { protect, authorize } = require('../middleware/auth');
 
 // Get pending vendors for approval (Admin only, or Manager with approvals permission)
-router.get('/pending-vendors', protect, authorize(['Admin', 'Manager'], 'approvals'), async (req, res) => {
+router.get('/pending-vendors', protect, authorize(['Admin', 'Manager'], 'approvals'), async (req, res, next) => {
   try {
     const vendors = await User.find({ 
       role: 'Vendor', 
@@ -18,7 +18,7 @@ router.get('/pending-vendors', protect, authorize(['Admin', 'Manager'], 'approva
 });
 
 // Approve a vendor and issue license (Admin only, or Manager with approvals permission)
-router.put('/approve/:id', protect, authorize(['Admin', 'Manager'], 'approvals'), async (req, res) => {
+router.put('/approve/:id', protect, authorize(['Admin', 'Manager'], 'approvals'), async (req, res, next) => {
   try {
     const { registrationLicenseId } = req.body;
     const vendor = await User.findById(req.params.id);
@@ -47,7 +47,7 @@ router.put('/approve/:id', protect, authorize(['Admin', 'Manager'], 'approvals')
 });
 
 // Get all vendors (Admin/Manager only)
-router.get('/all-vendors', protect, authorize(['Admin', 'Manager'], 'projects'), async (req, res) => {
+router.get('/all-vendors', protect, authorize(['Admin', 'Manager'], 'projects'), async (req, res, next) => {
   try {
     const vendors = await User.find({ role: 'Vendor' }).select('-password');
     res.status(200).json({ success: true, vendors });
@@ -57,7 +57,7 @@ router.get('/all-vendors', protect, authorize(['Admin', 'Manager'], 'projects'),
 });
 
 // Get all projects across the platform (Admin/Manager with projects permission)
-router.get('/all-projects', protect, authorize(['Admin', 'Manager'], 'projects'), async (req, res) => {
+router.get('/all-projects', protect, authorize(['Admin', 'Manager'], 'projects'), async (req, res, next) => {
   try {
     const Project = require('../models/Project'); // Lazy load to avoid circular deps if any
     const projects = await Project.find()
